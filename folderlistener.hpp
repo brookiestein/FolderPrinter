@@ -20,8 +20,6 @@ private slots:
 public:
     explicit FolderListener(QObject *parent = nullptr);
     ~FolderListener();
-signals:
-    void quit();
 };
 
 #endif // FOLDERLISTENER_HPP

@@ -7,8 +7,6 @@
 #include "folderlistener.hpp"
 #include "printer.hpp"
 
-void signalHandler(int signal);
-
 FolderListener::FolderListener(QObject *parent)
     : QObject{parent}
     , m_watcher(parent)
@@ -56,6 +54,10 @@ void FolderListener::setListenPath()
         m_settings->setValue("Path", m_listenPath);
     } else {
         m_listenPath = m_settings->value("Path").toString();
+    }
+
+    if (not d.exists(m_listenPath)) {
+        d.mkpath(m_listenPath);
     }
 }
 

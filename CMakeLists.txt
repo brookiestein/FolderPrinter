@@ -8,8 +8,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_compile_definitions(PROGRAM_NAME="${PROJECT_NAME}")
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Widgets PrintSupport)
+find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core Widgets PrintSupport)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Widgets PrintSupport)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(deps REQUIRED IMPORTED_TARGET poppler-qt6)
 
 set(PROJECT_SOURCES
     main.cpp
@@ -46,7 +48,7 @@ target_link_libraries(FolderPrinter
     PRIVATE Qt${QT_VERSION_MAJOR}::Core
             Qt${QT_VERSION_MAJOR}::Widgets
             Qt${QT_VERSION_MAJOR}::PrintSupport
-            poppler-qt5
+            PkgConfig::deps
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
@@ -70,5 +72,5 @@ install(TARGETS FolderPrinter
 )
 
 if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(BitMPlayer)
+    qt_finalize_executable(FolderPrinter)
 endif()
